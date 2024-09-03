@@ -28,7 +28,7 @@ with app.app_context():
     db.create_all()
 
 
-@app.route('/store_data', methods=['POST'])
+@app.route('/registering', methods=['POST'])
 def store_data():
     name = request.form['name']
     mobilenumber = request.form['mobilenumber']
@@ -51,7 +51,7 @@ def store_data():
     db.session.add(data)
     db.session.commit()
     
-    return 'Data added successfully!'
+    return render_template('alert_redirect.html')
 
 @app.route('/datas')
 def datas():

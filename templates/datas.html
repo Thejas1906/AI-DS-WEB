@@ -56,10 +56,30 @@ br {
     display: block;
     margin: 20px 0;
 }
+body.hidden {
+            display: none;
+    }
 
     </style>
+    <script>
+        function checkPassword() {
+            var correctPassword = 'your_secret_password';  // Replace with your actual password
+            var enteredPassword = prompt("Please enter the password to view the data:");
+
+            if (enteredPassword === correctPassword) {
+                document.body.classList.remove('hidden');  // Show body content
+            } else {
+                alert("Incorrect password! Redirecting to home page.");
+                window.location.href = "/";
+            }
+        }
+
+        window.onload = function() {
+            checkPassword();
+        }
+    </script>
 </head>
-<body>
+<body class="hidden">
     <h1>Registration Details</h1>
     <table border="1">
         <thead>
