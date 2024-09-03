@@ -149,26 +149,22 @@
             <div class="checkbox-container">
                 <div class="optgroup">
                     <span class="group-label">Technical events</span>
-                    <label><input type="checkbox" value="paper_presentation"> Paper Presentation</label>
-                    <label><input type="checkbox" value="best_prompting"> Best Prompting</label>
-                    <label><input type="checkbox" value="tech_pictionary"> Tech Pictionary</label>
-                    <label><input type="checkbox" value="cicada"> Cicada</label>
-                    <label><input type="checkbox" value="technical_quiz"> Technical Quiz</label>
+                    <label><input type="checkbox" name="events" value="Paper Presentation"> Paper Presentation</label>
+                    <label><input type="checkbox" name="events" value="Best Prompting"> Best Prompting</label>
+                    <label><input type="checkbox" name="events" value="Tech Pictionary"> Tech Pictionary</label>
+                    <label><input type="checkbox" name="events" value="Cicada"> Cicada</label>
+                    <label><input type="checkbox" name="events" value="Technical Quiz"> Technical Quiz</label>
                 </div>
                 <div class="optgroup">
                     <span class="group-label">Non-technical events</span>
-                    <label><input type="checkbox" value="ipl_auction"> IPL Auction</label>
-                    <label><input type="checkbox" value="esports"> E-sports</label>
-                    <label><input type="checkbox" value="chess"> Chess</label>
-                    <label><input type="checkbox" value="photography"> Photography</label>
-                    <label><input type="checkbox" value="meme"> Meme</label>
+                    <label><input type="checkbox" name="events" value="Ipl Auction"> IPL Auction</label>
+                    <label><input type="checkbox" name="events" value="Esports"> E-sports</label>
+                    <label><input type="checkbox" name="events" value="Chess"> Chess</label>
+                    <label><input type="checkbox" name="events" value="Photography"> Photography</label>
+                    <label><input type="checkbox" name="events" value="Meme"> Meme</label>
                 </div>
             </div>
             <p id="warning" class="warning"></p>
-            <div class="policy">
-                <input type="checkbox">
-                <h3>I accept all terms & condition</h3>
-            </div>
             <div class="input-box button">
                 <input type="submit" value="Register Now">
             </div>
@@ -185,6 +181,9 @@
                 const selectedCount = document.querySelectorAll('.optgroup input[type="checkbox"]:checked').length;
                 if (selectedCount > 2) {
                     document.getElementById('warning').textContent = "You can select up to two events only.";
+                    this.checked = false;
+                } else if (selectedCount < 1) {
+                    document.getElementById('warning').textContent = "You should select atleast one event.";
                     this.checked = false;
                 } else {
                     document.getElementById('warning').textContent = "";

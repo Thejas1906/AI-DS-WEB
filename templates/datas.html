@@ -3,10 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All datas</title>
+    <title>Registration details</title>
+    <style>
+        /* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Header styles */
+h1 {
+    text-align: center;
+    color: #333;
+    margin: 20px 0;
+}
+
+/* Table container styles */
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+/* Table styles */
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+/* Extra spacing */
+br {
+    display: block;
+    margin: 20px 0;
+}
+
+    </style>
 </head>
 <body>
-    <h1>All Data</h1>
+    <h1>Registration Details</h1>
     <table border="1">
         <thead>
             <tr>
@@ -15,6 +69,7 @@
                 <th>Mobile Number</th>
                 <th>College</th>
                 <th>Team Name</th>
+                <th>Events</th>
             </tr>
         </thead>
         <tbody>
@@ -25,11 +80,12 @@
                 <td>{{ data.mobilenumber }}</td>
                 <td>{{ data.college }}</td>
                 <td>{{ data.teamname }}</td>
+                <td>{{ data.events }}</td>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <br>
-    <a href="/">Add another data</a>
 </body>
 </html>
