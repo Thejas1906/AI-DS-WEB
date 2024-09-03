@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask import render_template,request,redirect,session
 from flask_sqlalchemy import SQLAlchemy
@@ -7,7 +8,7 @@ app = Flask(__name__, static_url_path='/static')
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://yogi:passwd@localhost/todo"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -35,8 +36,6 @@ def store_data():
     college = request.form['college']
     teamname = request.form['teamname']
     selected_events = request.form.getlist('events')
-    print(selected_events)
-
     events_str = ','.join(selected_events)
 
     
