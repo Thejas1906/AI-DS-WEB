@@ -3,6 +3,7 @@ from flask import Flask
 from flask import render_template,request,redirect,session
 from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -18,8 +19,9 @@ class Datas(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False)
     mobilenumber = db.Column(db.String(15), unique=True, nullable=False)
+    dept = db.Column(db.String(100), nullable=False)
     college = db.Column(db.String(100), nullable=False)
-    teamname = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
     events = db.Column(db.String, nullable=False)
     def __repr__(self):
         return f'<data {self.name}>'
@@ -33,8 +35,9 @@ with app.app_context():
 def store_data():
     name = request.form['name']
     mobilenumber = request.form['mobilenumber']
+    dept = request.form['dept']
     college = request.form['college']
-    teamname = request.form['teamname']
+    email = request.form['email']
     selected_events = request.form.getlist('events')
     events_str = ','.join(selected_events)
 
@@ -42,15 +45,21 @@ def store_data():
     data = Datas(
         name=name,
         mobilenumber=mobilenumber,
+        dept=dept,
         college=college,
-        teamname=teamname,
+        email=email,
         events=events_str
     )
     
-    db.session.add(data)
-    db.session.commit()
+    try:
+        db.session.add(data)
+        db.session.commit()
+        return render_template('success_redirect.html')
+    except IntegrityError:
+        db.session.rollback()  # Rollback the session in case of an error
+        return render_template('fail_redirect.html')
     
-    return render_template('alert_redirect.html')
+    
 
 @app.route('/datas')
 def datas():

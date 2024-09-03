@@ -42,12 +42,16 @@
             height: 3px;
             width: 240px;
             border-radius: 12px;
-            background: #4070f4;
+            background: #FE320A;
         }
         .wrapper form {
             margin-top: 30px;
         }
         .wrapper form .input-box {
+            height: 52px;
+            margin: 18px 0;
+        }
+        .wrapper form .home-box {
             height: 52px;
             margin: 18px 0;
         }
@@ -64,9 +68,22 @@
             border-radius: 6px;
             transition: all 0.3s ease;
         }
+        form .home-box input {
+            height: 100%;
+            width: 100%;
+            outline: none;
+            padding: 0 15px;
+            font-size: 17px;
+            font-weight: 400;
+            color: #333;
+            border: 1.5px solid #C7BEBE;
+            border-bottom-width: 2.5px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
         .input-box input:focus,
         .input-box input:valid {
-            border-color: #4070f4;
+            border-color: #FE320A;
         }
         form .policy {
             display: flex;
@@ -82,11 +99,21 @@
             color: #fff;
             letter-spacing: 1px;
             border: none;
-            background: #4070f4;
+            background: #FE320A;
             cursor: pointer;
         }
         .input-box.button input:hover {
-            background: #0e4bf1;
+            background: #c43f24;
+        }
+        .home-box.button input {
+            color: #fff;
+            letter-spacing: 1px;
+            border: none;
+            background: #FE320A;
+            cursor: pointer;
+        }
+        .home-box.button input:hover {
+            background: #c43f24;
         }
         form .text h3 {
             color: #333;
@@ -94,7 +121,7 @@
             text-align: center;
         }
         form .text h3 a {
-            color: #4070f4;
+            color: #FE320A;
             text-decoration: none;
         }
         form .text h3 a:hover {
@@ -140,10 +167,13 @@
                 <input type="text" name="mobilenumber" title="Error Message" pattern="[1-9]{1}[0-9]{9}" placeholder="Enter your number" required>
             </div>
             <div class="input-box">
+                <input type="dept" id="dept" name="dept" placeholder="Enter your department" required>
+            </div>
+            <div class="input-box">
                 <input type="text" id="college" name="college" placeholder="Enter your college name" required>
             </div>
             <div class="input-box">
-                <input type="text" id="teamname" name="teamname" placeholder="Enter your team name" required>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
             </div>
             <label>Select events (up to two):</label>
             <div class="checkbox-container">
@@ -168,8 +198,8 @@
             <div class="input-box button">
                 <input type="submit" value="Register Now">
             </div>
-            <div class="text">
-                <h3>Already have an account? <a href="#">Login now</a></h3>
+            <div class="home-box button">
+                <input type="submit" value="Go Home" onclick="window.location.href='/index.html'">
             </div>
         </form>
     </div>
