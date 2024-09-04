@@ -149,6 +149,12 @@
         .optgroup label:hover {
             background-color: #f1f1f1;
         }
+        .optgroup input[disabled] + span {
+            color: #999;
+        }
+        .optgroup input[disabled] {
+            cursor: not-allowed;
+        }
         .hidden {
             display: none;
         }
@@ -182,23 +188,25 @@
                 <option value="team-4">Team of 4</option>
             </select>
 
+            <br><br>
             <label>Select events (up to two):</label>
             <div class="checkbox-container">
                 <div class="optgroup" id="technical-events">
                     <span class="group-label">Technical events</span>
-                    <label><input type="checkbox" name="events" value="Paper Presentation"> Paper Presentation</label>
-                    <label><input type="checkbox" name="events" value="Best Prompting"> Best Prompting</label>
-                    <label><input type="checkbox" name="events" value="Tech Pictionary"> Tech Pictionary</label>
-                    <label><input type="checkbox" name="events" value="Cicada"> Cicada</label>
-                    <label><input type="checkbox" name="events" value="Technical Quiz"> Technical Quiz</label>
+                    <label><input type="checkbox" name="events" value="Paper Presentation"> <span>Paper Presentation</span></label>
+                    <label><input type="checkbox" name="events" value="Best Prompting"> <span>Best Prompting</span></label>
+                    <label><input type="checkbox" name="events" value="Tech Pictionary"> <span>Tech Pictionary</span></label>
+                    <label><input type="checkbox" name="events" value="Cicada"> <span>Cicada</span></label>
+                    <label><input type="checkbox" name="events" value="Technical Quiz"> <span>Technical Quiz</span></label>
                 </div>
                 <div class="optgroup" id="non-technical-events">
                     <span class="group-label">Non-technical events</span>
-                    <label><input type="checkbox" name="events" value="Ipl Auction"> IPL Auction</label>
-                    <label><input type="checkbox" name="events" value="Esports"> E-sports</label>
-                    <label><input type="checkbox" name="events" value="Chess"> Chess</label>
-                    <label><input type="checkbox" name="events" value="Photography"> Photography</label>
-                    <label><input type="checkbox" name="events" value="Meme"> Meme</label>
+                    <label><input type="checkbox" name="events" value="Ipl Auction"> <span>IPL Auction</span></label>
+                    <label><input type="checkbox" name="events" value="PUBG/Freefire"> <span>PUBG/Freefire</span></label>
+                    <label><input type="checkbox" name="events" value="PES"> <span>PES</span></label>
+                    <label><input type="checkbox" name="events" value="Chess"> <span>Chess</span></label>
+                    <label><input type="checkbox" name="events" value="Photography"> <span>Photography</span></label>
+                    <label><input type="checkbox" name="events" value="Reel Making"> <span>Reel Making</span></label>
                 </div>
             </div>
 
@@ -220,9 +228,8 @@
                 if (selectedCount > 2) {
                     document.getElementById('warning').textContent = "You can select up to two events only.";
                     this.checked = false;
-                } else if (selectedCount < 1) {
+                } else if (selectedCount === 0) {
                     document.getElementById('warning').textContent = "You should select at least one event.";
-                    this.checked = false;
                 } else {
                     document.getElementById('warning').textContent = "";
                 }
@@ -231,29 +238,36 @@
 
         // Function to handle team size selection and update event visibility
         const teamSizeDropdown = document.getElementById('team-size');
-        const allCheckboxes = document.querySelectorAll('.optgroup label');
+        const technicalEvents = document.getElementById('technical-events');
+        const nonTechnicalEvents = document.getElementById('non-technical-events');
+
+        const sizeMap = {
+            'individual': ['Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz', 'Photography', 'Reel Making','Chess','Photography','PES'],
+            'team-2': ['Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz', 'Photography', 'Reel Making', 'Chess','Photography','PES', 'PUBG/Freefire'],
+            'team-3': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz', 'Ipl Auction', 'PUBG/Freefire', 'Photography', 'Reel Making', 'Chess', 'PES'],
+            'team-4': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz', 'Ipl Auction', 'PUBG/Freefire', 'Photography', 'Reel Making', 'Chess', 'PES']
+        };
 
         function updateEventVisibility() {
             const selectedSize = teamSizeDropdown.value;
-            const sizeMap = {
-                'individual': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary'],
-                'team-2': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary', 'Cicada'],
-                'team-3': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz'],
-                'team-4': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz', 'Ipl Auction', 'Esports']
-            };
+            const visibleEvents = sizeMap[selectedSize];
 
-            allCheckboxes.forEach(label => {
+            const allLabels = [...technicalEvents.querySelectorAll('label'), ...nonTechnicalEvents.querySelectorAll('label')];
+            allLabels.forEach(label => {
                 const checkbox = label.querySelector('input');
-                if (sizeMap[selectedSize].includes(checkbox.value)) {
+                const eventValue = checkbox.value;
+                if (visibleEvents.includes(eventValue)) {
+                    checkbox.disabled = false;
                     label.classList.remove('hidden');
                 } else {
+                    checkbox.disabled = true;
                     label.classList.add('hidden');
                 }
             });
         }
 
         teamSizeDropdown.addEventListener('change', updateEventVisibility);
-        
+
         // Initialize visibility based on default selected value
         updateEventVisibility();
     </script>
