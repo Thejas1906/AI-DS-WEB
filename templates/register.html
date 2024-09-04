@@ -127,32 +127,30 @@
         form .text h3 a:hover {
             text-decoration: underline;
         }
-        /* Style the container holding the checkbox groups */
         .checkbox-container {
             display: flex;
-            justify-content: space-between;
-            gap: 20px; /* Space between the groups */
+            flex-direction: column;
+            gap: 20px;
         }
-        /* Style each group */
         .optgroup {
-            flex: 1; /* Allow each group to take up equal space */
+            flex: 1;
         }
-        /* Style each option group */
         .group-label {
             font-weight: bold;
             margin-bottom: 8px;
             display: block;
         }
-        /* Style each option */
         .optgroup label {
             display: block;
             margin-bottom: 8px;
             cursor: pointer;
             font-size: 14px;
         }
-        /* Style each option on hover */
         .optgroup label:hover {
             background-color: #f1f1f1;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -167,7 +165,7 @@
                 <input type="text" name="mobilenumber" title="Error Message" pattern="[1-9]{1}[0-9]{9}" placeholder="Enter your number" required>
             </div>
             <div class="input-box">
-                <input type="dept" id="dept" name="dept" placeholder="Enter your department" required>
+                <input type="text" id="dept" name="dept" placeholder="Enter your department" required>
             </div>
             <div class="input-box">
                 <input type="text" id="college" name="college" placeholder="Enter your college name" required>
@@ -175,9 +173,18 @@
             <div class="input-box">
                 <input type="email" id="email" name="email" placeholder="Enter your email" required>
             </div>
+
+            <label for="team-size">Select team size:</label>
+            <select id="team-size">
+                <option value="individual">Individual</option>
+                <option value="team-2">Team of 2</option>
+                <option value="team-3">Team of 3</option>
+                <option value="team-4">Team of 4</option>
+            </select>
+
             <label>Select events (up to two):</label>
             <div class="checkbox-container">
-                <div class="optgroup">
+                <div class="optgroup" id="technical-events">
                     <span class="group-label">Technical events</span>
                     <label><input type="checkbox" name="events" value="Paper Presentation"> Paper Presentation</label>
                     <label><input type="checkbox" name="events" value="Best Prompting"> Best Prompting</label>
@@ -185,7 +192,7 @@
                     <label><input type="checkbox" name="events" value="Cicada"> Cicada</label>
                     <label><input type="checkbox" name="events" value="Technical Quiz"> Technical Quiz</label>
                 </div>
-                <div class="optgroup">
+                <div class="optgroup" id="non-technical-events">
                     <span class="group-label">Non-technical events</span>
                     <label><input type="checkbox" name="events" value="Ipl Auction"> IPL Auction</label>
                     <label><input type="checkbox" name="events" value="Esports"> E-sports</label>
@@ -194,12 +201,13 @@
                     <label><input type="checkbox" name="events" value="Meme"> Meme</label>
                 </div>
             </div>
+
             <p id="warning" class="warning"></p>
             <div class="input-box button">
                 <input type="submit" value="Register Now">
             </div>
             <div class="home-box button">
-                <input type="submit" value="Go Home" onclick="window.location.href='/index.html'">
+                <input type="button" value="Go Home" onclick="window.location.href='/index.html'">
             </div>
         </form>
     </div>
@@ -213,13 +221,41 @@
                     document.getElementById('warning').textContent = "You can select up to two events only.";
                     this.checked = false;
                 } else if (selectedCount < 1) {
-                    document.getElementById('warning').textContent = "You should select atleast one event.";
+                    document.getElementById('warning').textContent = "You should select at least one event.";
                     this.checked = false;
                 } else {
                     document.getElementById('warning').textContent = "";
                 }
             });
         });
+
+        // Function to handle team size selection and update event visibility
+        const teamSizeDropdown = document.getElementById('team-size');
+        const allCheckboxes = document.querySelectorAll('.optgroup label');
+
+        function updateEventVisibility() {
+            const selectedSize = teamSizeDropdown.value;
+            const sizeMap = {
+                'individual': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary'],
+                'team-2': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary', 'Cicada'],
+                'team-3': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz'],
+                'team-4': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz', 'Ipl Auction', 'Esports']
+            };
+
+            allCheckboxes.forEach(label => {
+                const checkbox = label.querySelector('input');
+                if (sizeMap[selectedSize].includes(checkbox.value)) {
+                    label.classList.remove('hidden');
+                } else {
+                    label.classList.add('hidden');
+                }
+            });
+        }
+
+        teamSizeDropdown.addEventListener('change', updateEventVisibility);
+        
+        // Initialize visibility based on default selected value
+        updateEventVisibility();
     </script>
 </body>
 </html>
