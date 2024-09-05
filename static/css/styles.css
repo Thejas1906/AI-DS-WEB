@@ -122,7 +122,7 @@ nav h3 {
 }
 
 #center h1 {
-    font-size: 10vw;
+    
     text-align: right;
     line-height: 8vw;
 }
@@ -587,7 +587,7 @@ nav h3 {
     }
 
     #bottom-part2 img {
-        width: 100%;
+        width: 150%;
         border-radius: 10px;
     }
 
@@ -711,14 +711,18 @@ nav h3 {
   .header_link {
     color: #000;
     text-decoration: none;
-    font-size: 24px;
-    margin-top: 70px;
-    font-weight: 900; /* Very large font weight */
-    display: flex; /* Enable flexbox layout */
-    align-items: center; /* Center items vertically */
-    justify-content: flex-end; /* Align items to the right */
-    width: 100%; /* Ensure the link takes up full width of the parent container */
-    box-sizing: border-box; /* Ensure padding/margin are included in width */
+    font-size: 4em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    box-sizing: border-box;
+    letter-spacing: -.03em;
+    text-transform: uppercase;
+    font-family: Neuehaasdisplay mediu, sans-serif;
+    line-height: 1.1;
+    display: inline; /* Ensure padding/margin are included in width */
   }
   
   
@@ -750,6 +754,10 @@ nav h3 {
   }
   
   
-  #home{
+  .home{
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
+
+.genx{
+    width:"100px",
+}

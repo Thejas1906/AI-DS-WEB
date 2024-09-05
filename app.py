@@ -9,7 +9,7 @@ app = Flask(__name__, static_url_path='/static')
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://test_an2q_user:zYieQLZPEdhLUAsSwgegtxvIYgwPx1VH@dpg-crbcuadsvqrc73ev6gd0-a.oregon-postgres.render.com/test_an2q"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
