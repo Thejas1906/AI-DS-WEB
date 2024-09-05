@@ -81,6 +81,10 @@ def non_technical():
 def register():
     return render_template("register.html")
 
+@app.route('/fun')
+def fun():
+    return render_template("fun.html")
+
 @app.route('/')
 def home():
     return render_template("home.html")
