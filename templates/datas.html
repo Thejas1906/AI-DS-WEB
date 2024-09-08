@@ -79,6 +79,13 @@
         .download-btn:hover {
             background-color: #45a049;
         }
+
+        /* Image styles */
+        .image-preview {
+            max-width: 200px;
+            display: block;
+            margin: 10px auto;
+        }
     </style>
     <script>
         function checkPassword() {
@@ -97,25 +104,25 @@
             var table = document.querySelector('table');
             var rows = table.querySelectorAll('tr');
             var csv = [];
-            
+
             for (var row of rows) {
                 var cols = row.querySelectorAll('td, th');
                 var csvRow = [];
-                
+
                 for (var col of cols) {
                     csvRow.push('"' + col.innerText.replace(/"/g, '""') + '"');
                 }
-                
+
                 csv.push(csvRow.join(','));
             }
-            
+
             var csvFile = new Blob([csv.join('\n')], {type: 'text/csv'});
             var downloadLink = document.createElement('a');
-            
+
             downloadLink.download = 'registration_details.csv';
             downloadLink.href = window.URL.createObjectURL(csvFile);
             downloadLink.style.display = 'none';
-            
+
             document.body.appendChild(downloadLink);
             downloadLink.click();
         }
@@ -136,7 +143,11 @@
                 <th>Dept</th>
                 <th>College</th>
                 <th>E-Mail</th>
+                <th>Team Size</th>
                 <th>Events</th>
+                <th>Expected Amount</th>
+                <th>Transaction ID</th>
+                <th>Payment Screenshot</th>
             </tr>
         </thead>
         <tbody>
@@ -148,7 +159,17 @@
                 <td>{{ data.dept }}</td>
                 <td>{{ data.college }}</td>
                 <td>{{ data.email }}</td>
+                <td>{{ data.team_size }}</td>
                 <td>{{ data.events }}</td>
+                <td>{{ data.expected_amount }}</td>
+                <td>{{ data.transaction_id }}</td>
+                <td>
+                    {% if data.screenshot %}
+                        <img src="{{ url_for('get_image', data_id=data.id) }}" class="image-preview" alt="Image for {{ data.name }}">
+                    {% else %}
+                        No image available
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

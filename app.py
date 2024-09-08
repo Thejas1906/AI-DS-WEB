@@ -9,10 +9,13 @@ app = Flask(__name__, static_url_path='/static')
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://test_an2q_user:zYieQLZPEdhLUAsSwgegtxvIYgwPx1VH@dpg-crbcuadsvqrc73ev6gd0-a.oregon-postgres.render.com/test_an2q"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://psql_l26h_user:BfHV8a5Uwbr3sSuPppBEy9ahEMLPTGdv@dpg-crep6j3gbbvc73bsqtj0-a.oregon-postgres.render.com/psql_l26h"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = "secretkey123"
 
 db = SQLAlchemy(app)
+
+ENTRY_FEE=250
 
 # Define the model
 class Datas(db.Model):
@@ -23,6 +26,10 @@ class Datas(db.Model):
     college = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     events = db.Column(db.String, nullable=False)
+    team_size = db.Column((db.Integer), nullable=False)
+    expected_amount = db.Column(db.Integer, nullable=False)
+    transaction_id = db.Column(db.String(100), unique=True, nullable=False)
+    screenshot = db.Column(db.LargeBinary, nullable=False)
     def __repr__(self):
         return f'<data {self.name}>'
 
@@ -32,32 +39,51 @@ with app.app_context():
 
 
 @app.route('/registering', methods=['POST'])
-def store_data():
-    name = request.form['name']
-    mobilenumber = request.form['mobilenumber']
-    dept = request.form['dept']
-    college = request.form['college']
-    email = request.form['email']
-    selected_events = request.form.getlist('events')
-    events_str = ','.join(selected_events)
+def pass_data():
+    if request.method == 'POST':
+        session['registration'] = {
+                'name': request.form['name'],
+                'mobilenumber': request.form['mobilenumber'],
+                'dept': request.form['dept'],
+                'college': request.form['college'],
+                'email': request.form['email'],
+                'events_str' : ','.join(request.form.getlist('events')),
+                'team_size': request.form['team-size'],
+                'expected_amount' : int(request.form['team-size'])*ENTRY_FEE
+        }
+        return redirect("payment")
 
-    
-    data = Datas(
-        name=name,
-        mobilenumber=mobilenumber,
-        dept=dept,
-        college=college,
-        email=email,
-        events=events_str
-    )
-    
-    try:
-        db.session.add(data)
-        db.session.commit()
-        return render_template('success_redirect.html')
-    except IntegrityError:
-        db.session.rollback()  # Rollback the session in case of an error
-        return render_template('fail_redirect.html')
+@app.route('/paying', methods=['POST'])
+def store_data():
+    transaction_id = request.form['transaction-id']
+    screenshot = request.files['screenshot']
+
+    screenshot_binary = None
+    if screenshot:
+        screenshot_binary = screenshot.read()
+
+    registration_data = session.get('registration')
+    if registration_data:
+        data = Datas(
+            name=registration_data['name'],
+            mobilenumber=registration_data['mobilenumber'],
+            dept=registration_data['dept'],
+            college=registration_data['college'],
+            email=registration_data['email'],
+            events=registration_data['events_str'],
+            team_size=registration_data['team_size'],
+            expected_amount=registration_data['expected_amount'],
+            transaction_id=transaction_id,
+            screenshot=screenshot_binary
+        )
+        try:
+            db.session.add(data)
+            db.session.commit()
+            return render_template('success_redirect.html')
+        except IntegrityError:
+            db.session.rollback()  # Rollback the session in case of an error
+            return render_template('fail_redirect.html')
+
     
     
 
@@ -67,6 +93,18 @@ def datas():
     for record in all_datas:
         record.events = record.events.split(',') 
     return render_template('datas.html', datas=all_datas)
+
+@app.route('/image/<int:data_id>')
+def get_image(data_id):
+    data = Datas.query.get(data_id)
+    if data and data.screenshot:
+        return app.response_class(
+            response=data.screenshot,
+            mimetype='image/jpeg',  # Adjust based on your image format (e.g., 'image/png')
+            headers={"Content-Disposition": "inline; filename=image.jpg"}
+        )
+    return "Image not found", 404
+
 
 
 @app.route('/technical')
@@ -80,6 +118,10 @@ def non_technical():
 @app.route('/register')
 def register():
     return render_template("register.html")
+
+@app.route('/payment')
+def payment():
+    return render_template("payment.html")
 
 @app.route('/fun')
 def fun():

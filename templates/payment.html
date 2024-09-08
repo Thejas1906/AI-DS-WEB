@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #EFEAE3;
+        }
+        .wrapper {
+            position: relative;
+            max-width: 430px;
+            width: 100%;
+            background: #fff;
+            padding: 34px;
+            border-radius: 6px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+        .wrapper h2 {
+            position: relative;
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+        }
+        .wrapper h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 100px;
+            border-radius: 12px;
+            background: #FE320A;
+        }
+        .wrapper form {
+            margin-top: 30px;
+        }
+        .input-box {
+            height: auto;
+            margin: 18px 0;
+        }
+        .input-box input,
+        .input-box textarea {
+            height: 52px;
+            width: 100%;
+            outline: none;
+            padding: 0 15px;
+            font-size: 17px;
+            font-weight: 400;
+            color: #333;
+            border: 1.5px solid #C7BEBE;
+            border-bottom-width: 2.5px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .input-box input[type="file"] {
+            height: auto;
+            padding: 10px 15px;
+            border: 1.5px solid #C7BEBE;
+            border-bottom-width: 2.5px;
+        }
+        .input-box input:focus,
+        .input-box textarea:focus,
+        .input-box input:valid,
+        .input-box textarea:valid {
+            border-color: #FE320A;
+        }
+        .wrapper img.qr-code {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            border: 1px solid #C7BEBE;
+            border-radius: 6px;
+        }
+        .notice {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #FEF4F4;
+            color: #D9534F;
+            border: 1px solid #D9534F;
+            border-radius: 6px;
+        }
+        .input-box.button input,
+        .home-box.button button {
+            color: #fff;
+            letter-spacing: 1px;
+            border: none;
+            background: #FE320A;
+            cursor: pointer;
+            padding: 15px 20px;
+            border-radius: 6px;
+            text-align: center;
+            display: block;
+            width: 100%;
+            font-size: 17px; /* Ensure font size matches */
+        }
+        .input-box.button input:hover,
+        .home-box.button button:hover {
+            background: #c43f24;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h2>Payment</h2>
+        <form action="/paying" method="post" enctype="multipart/form-data">
+            <img src="{{ url_for('static', filename='qr_code.png') }}" alt="QR Code" class="qr-code">
+            
+            <div class="input-box">
+                <input type="text" id="transaction-id" name="transaction-id" placeholder="Enter your transaction ID" required>
+            </div>
+
+            <div class="input-box">
+                <input type="file" id="screenshot" name="screenshot" accept="image/*" required>
+            </div>
+            
+            <div class="notice">
+                <p>The transaction ID and screenshot will be verified prior to the event. If the ID does not match, the registration will be canceled.</p>
+            </div>
+            
+            <div class="input-box button">
+                <input type="submit" value="Submit Payment">
+            </div>
+            <div class="home-box button">
+                <button type="button" onclick="window.location.href='/'">Go Home</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
