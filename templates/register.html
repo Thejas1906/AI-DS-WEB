@@ -21,42 +21,44 @@
         }
         .wrapper {
             position: relative;
-            max-width: 430px;
+            max-width: 600px; /* Increased width of the form */
             width: 100%;
             background: #fff;
             padding: 34px;
             border-radius: 6px;
             box-shadow: 0 5px 10px rgba(0,0,0,0.2);
         }
-        .wrapper h2 {
+        .wrapper h1 {
             position: relative;
-            font-size: 22px;
-            font-weight: 600;
+            font-size: 24px; /* Made the header slightly larger */
+            font-weight: 700; /* Made the header bolder */
             color: #333;
         }
-        .wrapper h2::before {
+        .wrapper h1::before {
             content: '';
             position: absolute;
             left: 0;
             bottom: 0;
             height: 3px;
-            width: 240px;
+            width: 270px;
             border-radius: 12px;
             background: #FE320A;
         }
         .wrapper form {
             margin-top: 30px;
         }
-        .wrapper form .input-box {
-            height: 52px;
+        .form-group {
+            display: flex;
+            flex-direction: column;
             margin: 18px 0;
         }
-        .wrapper form .home-box {
-            height: 52px;
-            margin: 18px 0;
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
         }
-        form .input-box input {
-            height: 100%;
+        .form-group input,
+        .form-group select {
+            height: 52px;
             width: 100%;
             outline: none;
             padding: 0 15px;
@@ -68,64 +70,33 @@
             border-radius: 6px;
             transition: all 0.3s ease;
         }
-        form .home-box input {
-            height: 100%;
-            width: 100%;
-            outline: none;
-            padding: 0 15px;
-            font-size: 17px;
-            font-weight: 400;
-            color: #333;
-            border: 1.5px solid #C7BEBE;
-            border-bottom-width: 2.5px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-        .input-box input:focus,
-        .input-box input:valid {
+        .form-group input:focus,
+        .form-group select:focus {
             border-color: #FE320A;
         }
-        form .policy {
-            display: flex;
-            align-items: center;
+        #team-members {
+            margin-top: 20px; /* Add space above the team members section */
         }
         form h3 {
-            color: #707070;
-            font-size: 14px;
-            font-weight: 500;
-            margin-left: 10px;
-        }
-        .input-box.button input {
-            color: #fff;
-            letter-spacing: 1px;
-            border: none;
-            background: #FE320A;
-            cursor: pointer;
-        }
-        .input-box.button input:hover {
-            background: #c43f24;
-        }
-        .home-box.button input {
-            color: #fff;
-            letter-spacing: 1px;
-            border: none;
-            background: #FE320A;
-            cursor: pointer;
-        }
-        .home-box.button input:hover {
-            background: #c43f24;
-        }
-        form .text h3 {
             color: #333;
-            width: 100%;
-            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            margin: 20px 0; /* Adjusted margin to position the text correctly */
         }
-        form .text h3 a {
-            color: #FE320A;
-            text-decoration: none;
+        .team-member-input {
+            height: 52px;
+            width: 100%; /* Make sure input spans full width of its container */
+            margin-bottom: 10px; /* Add space between input fields */
+            border: 1.5px solid #C7BEBE;
+            border-bottom-width: 2.5px;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 17px;
+            font-weight: 400;
+            color: #333; /* Match text color with other fields */
         }
-        form .text h3 a:hover {
-            text-decoration: underline;
+        #team-member-form {
+            width: 100%; /* Ensure the container spans the full width of the wrapper */
         }
         .checkbox-container {
             display: flex;
@@ -158,38 +129,69 @@
         .hidden {
             display: none;
         }
+        .events-label {
+            font-weight: bold;
+            margin: 20px 0 10px; /* Add margin to position correctly */
+        }
+        .button {
+            height: 52px;
+            width: 100%;
+            background-color: #b45340;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #d5271a; /* Darker red for hover effect */
+        }
+
     </style>
 </head>
 <body>
     <div class="wrapper">
-        <h2>Synaptix Registration</h2>
+        <h1>Synaptix Registration</h1>
         <form action="/registering" method="post">
-            <div class="input-box">
+            <div class="form-group">
+                <label for="name">Name:</label>
                 <input type="text" id="name" name="name" placeholder="Enter your name" required>
             </div>
-            <div class="input-box">
+            <div class="form-group">
+                <label for="mobilenumber">Mobile Number:</label>
                 <input type="text" name="mobilenumber" title="Error Message" pattern="[1-9]{1}[0-9]{9}" placeholder="Enter your number" required>
             </div>
-            <div class="input-box">
+            <div class="form-group">
+                <label for="dept">Department:</label>
                 <input type="text" id="dept" name="dept" placeholder="Enter your department" required>
             </div>
-            <div class="input-box">
+            <div class="form-group">
+                <label for="college">College Name:</label>
                 <input type="text" id="college" name="college" placeholder="Enter your college name" required>
             </div>
-            <div class="input-box">
+            <div class="form-group">
+                <label for="email">Email:</label>
                 <input type="email" id="email" name="email" placeholder="Enter your email" required>
             </div>
 
-            <label for="team-size">Select team size:</label>
-            <select name="team-size" id="team-size">
-                <option value="1">Individual</option>
-                <option value="2">Team of 2</option>
-                <option value="3">Team of 3</option>
-                <option value="4">Team of 4</option>
-            </select>
+            <div class="form-group">
+                <label for="team-size">Select team size:</label>
+                <select name="team-size" id="team-size">
+                    <option value="1">Individual</option>
+                    <option value="2">Team of 2</option>
+                    <option value="3">Team of 3</option>
+                    <option value="4">Team of 4</option>
+                </select>
+            </div>
 
-            <br><br>
-            <label>Select events (up to two):</label>
+            <div id="team-members" class="hidden">
+                <h3>Enter Team Details:</h3>
+                <div id="team-member-form"></div>
+            </div>
+
+            <label class="events-label">Select events (up to two):</label>
             <div class="checkbox-container">
                 <div class="optgroup" id="technical-events">
                     <span class="group-label">Technical events</span>
@@ -201,7 +203,7 @@
                 </div>
                 <div class="optgroup" id="non-technical-events">
                     <span class="group-label">Non-technical events</span>
-                    <label><input type="checkbox" name="events" value="Ipl Auction"> <span>IPL Auction</span></label>
+                    <label><input type="checkbox" name="events" value="Ipl Auction"> <span>Ipl Auction</span></label>
                     <label><input type="checkbox" name="events" value="PUBG/Freefire"> <span>PUBG/Freefire</span></label>
                     <label><input type="checkbox" name="events" value="PES"> <span>PES</span></label>
                     <label><input type="checkbox" name="events" value="Chess"> <span>Chess</span></label>
@@ -211,11 +213,11 @@
             </div>
 
             <p id="warning" class="warning"></p>
-            <div class="input-box button">
-                <input type="submit" value="Pay Now">
+            <div class="form-group">
+                <input style="color:white" type="submit" value="Pay Now" class="button">
             </div>
-            <div class="home-box button">
-                <input type="button" value="Go Home" onclick="window.location.href='/'">
+            <div class="form-group">
+                <input type="button" style="color:white" value="Go Home" onclick="window.location.href='/'" class="button">
             </div>
         </form>
     </div>
@@ -240,6 +242,8 @@
         const teamSizeDropdown = document.getElementById('team-size');
         const technicalEvents = document.getElementById('technical-events');
         const nonTechnicalEvents = document.getElementById('non-technical-events');
+        const teamMembersDiv = document.getElementById('team-members');
+        const teamMemberForm = document.getElementById('team-member-form');
 
         const sizeMap = {
             '1': ['Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz', 'Photography', 'Reel Making', 'Chess', 'PES'],
@@ -264,13 +268,46 @@
                     label.classList.add('hidden');
                 }
             });
+
+            // Update team member fields based on team size
+            if (selectedSize > 1) {
+                teamMembersDiv.classList.remove('hidden');
+                teamMemberForm.innerHTML = ''; // Clear existing fields
+
+                // Add Team Name input field
+                const teamNameDiv = document.createElement('div');
+                teamNameDiv.classList.add('form-group');
+                teamNameDiv.innerHTML = `
+                    <label for="teamname">Team Name:</label>
+                    <input type="text" id="teamname" name="teamname" placeholder="Enter team name" class="team-member-input">
+                `;
+                teamMemberForm.appendChild(teamNameDiv);
+
+                // Add Team Member inputs
+                const memberLabelDiv = document.createElement('div');
+                memberLabelDiv.classList.add('form-group');
+                memberLabelDiv.innerHTML = `
+                    <label>Teammate Names:</label>
+                `;
+                teamMemberForm.appendChild(memberLabelDiv);
+
+                for (let i = 2; i <= selectedSize; i++) {
+                    const memberDiv = document.createElement('div');
+                    memberDiv.classList.add('form-group');
+                    memberDiv.innerHTML = `
+                        <input type="text" id="teammate${i-1}" name="teammate${i-1}" placeholder="Enter teammate ${i-1} name" class="team-member-input">
+                    `;
+                    teamMemberForm.appendChild(memberDiv);
+                }
+            } else {
+                teamMembersDiv.classList.add('hidden');
+            }
         }
 
         teamSizeDropdown.addEventListener('change', updateEventVisibility);
 
         // Initialize visibility based on default selected value
         updateEventVisibility();
-
     </script>
 </body>
 </html>

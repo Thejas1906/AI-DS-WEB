@@ -9,7 +9,7 @@ app = Flask(__name__, static_url_path='/static')
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://psql_l26h_user:BfHV8a5Uwbr3sSuPppBEy9ahEMLPTGdv@dpg-crep6j3gbbvc73bsqtj0-a.oregon-postgres.render.com/psql_l26h"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://psql_hgp3_user:hjTLUnKLezEY1qzUFYwNxrtfIoTNoVLE@dpg-crg6h63v2p9s73a8s6cg-a.oregon-postgres.render.com/psql_hgp3"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = "secretkey123"
 
@@ -27,6 +27,8 @@ class Datas(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     events = db.Column(db.String, nullable=False)
     team_size = db.Column((db.Integer), nullable=False)
+    teamname = db.Column(db.String(100), nullable=True)
+    team_members = db.Column(db.String, nullable=True)
     expected_amount = db.Column(db.Integer, nullable=False)
     transaction_id = db.Column(db.String(100), unique=True, nullable=False)
     screenshot = db.Column(db.LargeBinary, nullable=False)
@@ -41,17 +43,30 @@ with app.app_context():
 @app.route('/registering', methods=['POST'])
 def pass_data():
     if request.method == 'POST':
-        session['registration'] = {
-                'name': request.form['name'],
-                'mobilenumber': request.form['mobilenumber'],
-                'dept': request.form['dept'],
-                'college': request.form['college'],
-                'email': request.form['email'],
-                'events_str' : ','.join(request.form.getlist('events')),
-                'team_size': request.form['team-size'],
-                'expected_amount' : int(request.form['team-size'])*ENTRY_FEE
+        registration_data = {
+            'name': request.form['name'],
+            'mobilenumber': request.form['mobilenumber'],
+            'dept': request.form['dept'],
+            'college': request.form['college'],
+            'email': request.form['email'],
+            'events_str': ','.join(request.form.getlist('events')),
+            'teamname': request.form.get('teamname', ''),
+            'team_size': int(request.form['team-size']),
+            'expected_amount': int(request.form['team-size']) * ENTRY_FEE
         }
-        return redirect("payment")
+
+        # Get team member names
+        team_members = []
+        for i in range(2, registration_data['team_size'] + 1):
+            teammate_name = request.form.get(f'teammate{i-1}')
+            if teammate_name:
+                team_members.append(teammate_name)
+        
+        registration_data['team_members'] = ','.join(team_members)  # Store as comma-separated string
+
+        session['registration'] = registration_data
+
+        return redirect("/payment")
 
 @app.route('/paying', methods=['POST'])
 def store_data():
@@ -72,9 +87,11 @@ def store_data():
             email=registration_data['email'],
             events=registration_data['events_str'],
             team_size=registration_data['team_size'],
+            teamname=registration_data.get('teamname'),
             expected_amount=registration_data['expected_amount'],
             transaction_id=transaction_id,
-            screenshot=screenshot_binary
+            screenshot=screenshot_binary,
+            team_members=registration_data['team_members']
         )
         try:
             db.session.add(data)

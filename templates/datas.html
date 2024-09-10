@@ -143,7 +143,9 @@
                 <th>Dept</th>
                 <th>College</th>
                 <th>E-Mail</th>
+                <th>Team Name</th> 
                 <th>Team Size</th>
+                <th>Team Members</th> 
                 <th>Events</th>
                 <th>Expected Amount</th>
                 <th>Transaction ID</th>
@@ -159,7 +161,9 @@
                 <td>{{ data.dept }}</td>
                 <td>{{ data.college }}</td>
                 <td>{{ data.email }}</td>
+                <td>{{ data.teamname if data.teamname else 'Individual' }}</td>
                 <td>{{ data.team_size }}</td>
+                <td>{{ data.team_members if data.team_members else 'No team members' }}</td>
                 <td>{{ data.events }}</td>
                 <td>{{ data.expected_amount }}</td>
                 <td>{{ data.transaction_id }}</td>
