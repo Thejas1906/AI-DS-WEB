@@ -3,7 +3,6 @@ from flask import Flask
 from flask import render_template,request,redirect,session
 from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
-from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -43,30 +42,52 @@ with app.app_context():
 @app.route('/registering', methods=['POST'])
 def pass_data():
     if request.method == 'POST':
-        registration_data = {
-            'name': request.form['name'],
-            'mobilenumber': request.form['mobilenumber'],
-            'dept': request.form['dept'],
-            'college': request.form['college'],
-            'email': request.form['email'],
-            'events_str': ','.join(request.form.getlist('events')),
-            'teamname': request.form.get('teamname', ''),
-            'team_size': int(request.form['team-size']),
-            'expected_amount': int(request.form['team-size']) * ENTRY_FEE
-        }
+        # Extract form data
+        name = request.form['name']
+        mobilenumber = request.form['mobilenumber']
+        dept = request.form['dept']
+        college = request.form['college']
+        email = request.form['email']
+        events_str = ','.join(request.form.getlist('events'))
+        teamname = request.form.get('teamname', '')
+        team_size = int(request.form['team-size'])
+        expected_amount = team_size * ENTRY_FEE
+        
+        # Check for existing mobile number and email
+        existing_user = Datas.query.filter(
+            (Datas.mobilenumber == mobilenumber) |
+            (Datas.email == email)
+        ).first()
 
-        # Get team member names
+        if existing_user:
+            # Handle the case where mobile number or email already exists
+            error_message = 'A user with this mobile number or email already exists.'
+            return render_template('fail_redirect.html', error_message=error_message)
+        
+        # Prepare team members list
         team_members = []
-        for i in range(2, registration_data['team_size'] + 1):
+        for i in range(2, team_size + 1):
             teammate_name = request.form.get(f'teammate{i-1}')
             if teammate_name:
                 team_members.append(teammate_name)
         
-        registration_data['team_members'] = ','.join(team_members)  # Store as comma-separated string
-
+        # Store registration data in the session
+        registration_data = {
+            'name': name,
+            'mobilenumber': mobilenumber,
+            'dept': dept,
+            'college': college,
+            'email': email,
+            'events_str': events_str,
+            'teamname': teamname,
+            'team_size': team_size,
+            'expected_amount': expected_amount,
+            'team_members': ','.join(team_members)  # Store as comma-separated string
+        }
         session['registration'] = registration_data
 
         return redirect("/payment")
+
 
 @app.route('/paying', methods=['POST'])
 def store_data():
@@ -93,13 +114,9 @@ def store_data():
             screenshot=screenshot_binary,
             team_members=registration_data['team_members']
         )
-        try:
-            db.session.add(data)
-            db.session.commit()
-            return render_template('success_redirect.html')
-        except IntegrityError:
-            db.session.rollback()  # Rollback the session in case of an error
-            return render_template('fail_redirect.html')
+        db.session.add(data)
+        db.session.commit()
+        return render_template('success_redirect.html')
 
     
     
