@@ -266,9 +266,21 @@ nav h3 {
 }
 
 #page2-bottom h1 {
-    font-size: 4vw;
-    width: 60%;
-    line-height: 4vw;
+    text-align: justify;
+    text-justify: inter-word;
+    width: 100%;
+    max-width: 700px; 
+    line-height: 1.1;
+    font-size:2.5em;
+    margin-top: 40px;
+}
+
+#page3 h1{
+    font-size: 55px;
+    color: #FE320A;
+    text-align: center;
+    margin: 40px 0 30px 0; /* Sets top margin to 40px and bottom margin to 30px */
+    padding: 20px;
 }
 
 #bottom-part2 {
@@ -521,7 +533,7 @@ nav h3 {
         object-fit: cover;
         object-position: center;
         width:40%;
-        margin-left: 4%;
+        margin-left: 2%;
     }
 
     #page2 {
@@ -555,6 +567,11 @@ nav h3 {
         /* background-color: lightblue; */
         display: inline-block;
     }
+    .elem h2 {
+        font-size: 8vw;
+        position: relative;
+        z-index: 9;
+    }
 
     #gola {
         height: 25px;
@@ -578,10 +595,31 @@ nav h3 {
         z-index: 9;
     }
 
+    #page3 h1{
+        font-size: 40px;
+        color: #FE320A;
+        text-align: center;
+        margin: 40px 0 30px 0; /* Sets top margin to 40px and bottom margin to 30px */
+        padding: 20px;
+    }
+
+    #spectra{
+    text-align: justify;
+    text-justify: inter-word;
+    width: 200%;
+    max-width: 600px;
+    line-height: 1.6;
+    font-size: 1.3em;
+    }
+
     #page2-bottom h1 {
-        font-size: 8.2vw;
-        width: 100%;
-        line-height: 9vw;
+        text-align: justify; 
+        text-justify: inter-word; 
+        width: 100%; 
+        max-width: 600px; 
+        line-height: 1;
+        font-size: 1.5em;
+        margin-top: 90px;
     }
 
     #bottom-part2 {
@@ -715,19 +753,24 @@ nav h3 {
   .header_link {
     color: #000;
     text-decoration: none;
-    font-size: 4em;
+    font-size: 2.9em;
     font-weight: 500;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: left;
     width: 100%;
     box-sizing: border-box;
     letter-spacing: -.03em;
     text-transform: uppercase;
-    font-family: Neuehaasdisplay mediu, sans-serif;
+    font-family: 'Neuehaasdisplay mediu', sans-serif;
     line-height: 1.1;
-    display: inline; /* Ensure padding/margin are included in width */
-  }
+    border: 2px solid #000; /* Adds a solid border */
+    padding: 10px; /* Adjust padding for spacing inside the border */
+    margin: 0px; /* Adds spacing between multiple header links */
+    border-radius: 8px; /* Optional: rounds the corners of the border */
+    transition: all 0.3s ease; /* Smooth hover transition */
+}
+
   
   
   .header_link_dot {
