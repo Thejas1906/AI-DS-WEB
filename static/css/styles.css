@@ -127,10 +127,10 @@ nav h3 {
     
     text-align: right;
     line-height: 8vw;
-    font-size: 150px;
+    font-size: 140px;
     margin-top: 200px;
-    line-height: 10vw;
-    margin-right:-14px ;
+    line-height: 8vw;
+    margin-left:-30px ;
 }
 
 #page1 video {
@@ -479,7 +479,7 @@ nav h3 {
     }
 
     nav {
-        padding: 8vw 5vw;
+        padding: 8vw 10vw;
         background-color: #EFEAE3;
     }
 
