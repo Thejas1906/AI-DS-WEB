@@ -249,114 +249,137 @@
         </form>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const checkboxes = document.querySelectorAll('.optgroup input[type="checkbox"]');
-            const warning = document.getElementById('warning');
-            const teamSizeDropdown = document.getElementById('team-size');
-            const teamMembersDiv = document.getElementById('team-members');
-            const teamMemberForm = document.getElementById('team-member-form');
-            const specialEvents = ['Ipl Auction', 'PUBG/Freefire/PES', 'Chess'];
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.optgroup input[type="checkbox"]');
+    const warning = document.getElementById('warning');
+    const teamSizeDropdown = document.getElementById('team-size');
+    const teamMembersDiv = document.getElementById('team-members');
+    const teamMemberForm = document.getElementById('team-member-form');
+    const specialEvents = ['Ipl Auction', 'PUBG/Freefire/PES', 'Chess'];
+    const form = document.querySelector('form');
     
-            function updateCheckboxes() {
-                const selectedTechnical = document.querySelectorAll('#technical-events input[type="checkbox"]:checked').length;
-                const selectedNonTechnical = document.querySelectorAll('#non-technical-events input[type="checkbox"]:checked').length;
-                const totalSelected = selectedTechnical + selectedNonTechnical;
-    
-                // Count how many special events are selected
-                const specialEventsSelected = specialEvents.filter(event => document.querySelector(`input[value="${event}"]:checked`)).length;
-    
-                // Disable checkboxes based on selection limits
-                checkboxes.forEach(checkbox => {
-                    const value = checkbox.value;
-                    const isTechnical = checkbox.closest('#technical-events') !== null;
-                    const isNonTechnical = checkbox.closest('#non-technical-events') !== null;
-    
-                    if (totalSelected >= 4 && !checkbox.checked) {
-                        checkbox.disabled = true;
-                    } else if (isTechnical && selectedTechnical >= 2 && !checkbox.checked) {
-                        checkbox.disabled = true;
-                    } else if (isNonTechnical && selectedNonTechnical >= 2 && !checkbox.checked) {
-                        checkbox.disabled = true;
-                    } else if (specialEvents.includes(value) && specialEventsSelected > 1 && !checkbox.checked) {
-                        checkbox.disabled = true;
-                    } else {
-                        checkbox.disabled = false;
-                    }
-                });
-    
-                // Show warning messages based on validation
-                if (totalSelected > 4) {
-                    warning.textContent = "You can select up to four events in total.";
-                    warning.style.display = 'block';
-                } else if (selectedTechnical > 2) {
-                    warning.textContent = "You can select up to two technical events only.";
-                    warning.style.display = 'block';
-                } else if (selectedNonTechnical > 2) {
-                    warning.textContent = "You can select up to two non-technical events only.";
-                    warning.style.display = 'block';
-                } else if (specialEventsSelected > 1) {
-                    warning.textContent = "You can select only one of IPL Auction, PUBG/Freefire/PES, or Chess.";
-                    warning.style.display = 'block';
-                } else {
-                    warning.textContent = "";
-                    warning.style.display = 'none'; // Hide warning if no issues
-                }
+    function updateCheckboxes() {
+        const selectedTechnical = document.querySelectorAll('#technical-events input[type="checkbox"]:checked').length;
+        const selectedNonTechnical = document.querySelectorAll('#non-technical-events input[type="checkbox"]:checked').length;
+        const totalSelected = selectedTechnical + selectedNonTechnical;
+
+        // Count how many special events are selected
+        const specialEventsSelected = specialEvents.filter(event => document.querySelector(`input[value="${event}"]:checked`)).length;
+
+        // Disable checkboxes based on selection limits
+        checkboxes.forEach(checkbox => {
+            const value = checkbox.value;
+            const isTechnical = checkbox.closest('#technical-events') !== null;
+            const isNonTechnical = checkbox.closest('#non-technical-events') !== null;
+
+            if (totalSelected >= 4 && !checkbox.checked) {
+                checkbox.disabled = true;
+            } else if (isTechnical && selectedTechnical >= 2 && !checkbox.checked) {
+                checkbox.disabled = true;
+            } else if (isNonTechnical && selectedNonTechnical >= 2 && !checkbox.checked) {
+                checkbox.disabled = true;
+            } else if (specialEvents.includes(value) && specialEventsSelected > 1 && !checkbox.checked) {
+                checkbox.disabled = true;
+            } else {
+                checkbox.disabled = false;
             }
-    
-            function updateEventVisibility() {
-                const selectedSize = teamSizeDropdown.value;
-    
-                checkboxes.forEach(checkbox => {
-                    if (selectedSize === '1' && checkbox.value === 'Ipl Auction') {
-                        checkbox.disabled = true;
-                        checkbox.checked = false; // Uncheck if it's selected
-                    } else {
-                        checkbox.disabled = false;
-                    }
-                });
-    
-                if (selectedSize > 1) {
-                    teamMembersDiv.classList.remove('hidden');
-                    teamMemberForm.innerHTML = '';
-    
-                    const teamNameDiv = document.createElement('div');
-                    teamNameDiv.classList.add('form-group');
-                    teamNameDiv.innerHTML = `
-                        <label for="teamname">Team Name:</label>
-                        <input type="text" id="teamname" name="teamname" placeholder="Enter team name" class="team-member-input">
-                    `;
-                    teamMemberForm.appendChild(teamNameDiv);
-    
-                    const memberLabelDiv = document.createElement('div');
-                    memberLabelDiv.classList.add('form-group');
-                    memberLabelDiv.innerHTML = `
-                        <label>Teammate Names:</label>
-                    `;
-                    teamMemberForm.appendChild(memberLabelDiv);
-    
-                    for (let i = 2; i <= selectedSize; i++) {
-                        const memberDiv = document.createElement('div');
-                        memberDiv.classList.add('form-group');
-                        memberDiv.innerHTML = `
-                            <input type="text" id="teammate${i-1}" name="teammate${i-1}" placeholder="Enter teammate ${i-1} name" class="team-member-input">
-                        `;
-                        teamMemberForm.appendChild(memberDiv);
-                    }
-                } else {
-                    teamMembersDiv.classList.add('hidden');
-                }
-    
-                updateCheckboxes();
-            }
-    
-            teamSizeDropdown.addEventListener('change', updateEventVisibility);
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', updateCheckboxes);
-            });
-    
-            updateEventVisibility();
-            updateCheckboxes();
         });
+
+        // Show warning messages based on validation
+        if (totalSelected > 4) {
+            warning.textContent = "You can select up to four events in total.";
+            warning.style.display = 'block';
+        } else if (selectedTechnical > 2) {
+            warning.textContent = "You can select up to two technical events only.";
+            warning.style.display = 'block';
+        } else if (selectedNonTechnical > 2) {
+            warning.textContent = "You can select up to two non-technical events only.";
+            warning.style.display = 'block';
+        } else if ((specialEventsSelected > 1) && (teamSizeDropdown.value === '1')) {
+            warning.textContent = "You can select only one of IPL Auction, PUBG/Freefire/PES, or Chess.";
+            warning.style.display = 'block';
+        } else if ((specialEventsSelected > 1) && (teamSizeDropdown.value != '1')) {
+            warning.textContent = "You can select only one of IPL Auction, PUBG/Freefire/PES, or Chess.";
+            warning.style.display = 'block';
+        } else {
+            warning.textContent = "";
+            warning.style.display = 'none'; // Hide warning if no issues
+        }
+    }
+
+    function updateEventVisibility() {
+        const selectedSize = teamSizeDropdown.value;
+
+        // Hide and disable 'Ipl Auction' if team size is '1'
+        checkboxes.forEach(checkbox => {
+            if (checkbox.value === 'Ipl Auction') {
+                if (selectedSize === '1') {
+                    checkbox.disabled = true;
+                    checkbox.checked = false; // Ensure it's unchecked
+                    checkbox.closest('label').style.display = 'none'; // Hide the label
+                } else {
+                    checkbox.disabled = false;
+                    checkbox.closest('label').style.display = 'block'; // Show the label
+                }
+            }
+        });
+
+        if (selectedSize > 1) {
+            // Show team member inputs
+            teamMembersDiv.classList.remove('hidden');
+            teamMemberForm.innerHTML = '';
+
+            // Add team name input
+            const teamNameDiv = document.createElement('div');
+            teamNameDiv.classList.add('form-group');
+            teamNameDiv.innerHTML = `
+                <label for="teamname">Team Name:</label>
+                <input type="text" id="teamname" name="teamname" placeholder="Enter team name" class="team-member-input">
+            `;
+            teamMemberForm.appendChild(teamNameDiv);
+
+            // Add teammate names inputs
+            const memberLabelDiv = document.createElement('div');
+            memberLabelDiv.classList.add('form-group');
+            memberLabelDiv.innerHTML = `
+                <label>Teammate Names:</label>
+            `;
+            teamMemberForm.appendChild(memberLabelDiv);
+
+            for (let i = 2; i <= selectedSize; i++) {
+                const memberDiv = document.createElement('div');
+                memberDiv.classList.add('form-group');
+                memberDiv.innerHTML = `
+                    <input type="text" id="teammate${i-1}" name="teammate${i-1}" placeholder="Enter teammate ${i-1} name" class="team-member-input">
+                `;
+                teamMemberForm.appendChild(memberDiv);
+            }
+        } else {
+            // Hide team member inputs
+            teamMembersDiv.classList.add('hidden');
+        }
+
+        updateCheckboxes();
+    }
+
+    // Initialize the form state based on the default value of the team size dropdown
+    updateEventVisibility();
+
+    teamSizeDropdown.addEventListener('change', updateEventVisibility);
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateCheckboxes);
+    });
+
+    form.addEventListener('submit', function(event) {
+        const warningText = warning.textContent.trim();
+        if (warningText) {
+            event.preventDefault(); // Prevent form submission
+            alert('Please choose valid events before submitting the form.');
+        }
+    });
+});
+
+
     </script>
     
     
