@@ -21,7 +21,7 @@
         }
         .wrapper {
             position: relative;
-            max-width: 600px; /* Increased width of the form */
+            max-width: 600px;
             width: 100%;
             background: #fff;
             padding: 34px;
@@ -30,8 +30,8 @@
         }
         .wrapper h1 {
             position: relative;
-            font-size: 24px; /* Made the header slightly larger */
-            font-weight: 700; /* Made the header bolder */
+            font-size: 24px;
+            font-weight: 700;
             color: #333;
         }
         .wrapper h1::before {
@@ -40,9 +40,9 @@
             left: 0;
             bottom: 0;
             height: 3px;
-            width: 270px;
+            width: 320px;
             border-radius: 12px;
-            background: #FE320A;
+            background: #ff9100;
         }
         .wrapper form {
             margin-top: 30px;
@@ -72,31 +72,31 @@
         }
         .form-group input:focus,
         .form-group select:focus {
-            border-color: #FE320A;
+            border-color: #ff9100;
         }
         #team-members {
-            margin-top: 20px; /* Add space above the team members section */
+            margin-top: 20px;
         }
         form h3 {
             color: #333;
             font-size: 17px;
             font-weight: 700;
-            margin: 20px 0; /* Adjusted margin to position the text correctly */
+            margin: 20px 0;
         }
         .team-member-input {
             height: 52px;
-            width: 100%; /* Make sure input spans full width of its container */
-            margin-bottom: 10px; /* Add space between input fields */
+            width: 100%;
+            margin-bottom: 10px;
             border: 1.5px solid #C7BEBE;
             border-bottom-width: 2.5px;
             border-radius: 6px;
             padding: 10px 15px;
             font-size: 17px;
             font-weight: 400;
-            color: #333; /* Match text color with other fields */
+            color: #333;
         }
         #team-member-form {
-            width: 100%; /* Ensure the container spans the full width of the wrapper */
+            width: 100%;
         }
         .checkbox-container {
             display: flex;
@@ -122,7 +122,7 @@
         }
         .optgroup input[disabled] + span {
             color: #999;
-        }       
+        }
         .optgroup input[disabled] {
             cursor: not-allowed;
         }
@@ -131,12 +131,21 @@
         }
         .events-label {
             font-weight: bold;
-            margin: 20px 0 10px; /* Add margin to position correctly */
+            margin: 20px 0 10px;
+        }
+        .warning {
+            color: #d8000c;
+            background-color: #ffd2d2;
+            border: 1px solid #d8000c;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: none;
         }
         .button {
             height: 52px;
             width: 100%;
-            background-color: #b45340;
+            background-color: #FFDF00;
             color: white;
             border: none;
             border-radius: 6px;
@@ -146,14 +155,32 @@
             transition: background-color 0.3s ease;
         }
         .button:hover {
-            background-color: #d5271a; /* Darker red for hover effect */
+            background-color: #ff9100;
         }
-
+        .note-box {
+            background-color: #e6f9e6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .note-box h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .note-box p {
+            font-size: 16px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <div class="wrapper">
-        <h1>Synaptix Registration</h1>
+        <h1>Spectragenix Registration</h1>
+        <div class="note-box">
+            <h2>Note:</h2>
+            <p>Food and refreshments will be provided.</p>
+        </div>
         <form action="/registering" method="post">
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -191,10 +218,10 @@
                 <div id="team-member-form"></div>
             </div>
 
-            <label class="events-label">Select events (up to two):</label>
+            <label class="events-label">Select events (Maximum 2 Technical, 2 Non-Technical, Total 4 events):</label>
             <div class="checkbox-container">
                 <div class="optgroup" id="technical-events">
-                    <span class="group-label">Technical events</span>
+                    <span class="group-label">Technical events:</span>
                     <label><input type="checkbox" name="events" value="Paper Presentation"> <span>Paper Presentation</span></label>
                     <label><input type="checkbox" name="events" value="Best Prompting"> <span>Best Prompting</span></label>
                     <label><input type="checkbox" name="events" value="Tech Pictionary"> <span>Tech Pictionary</span></label>
@@ -202,112 +229,136 @@
                     <label><input type="checkbox" name="events" value="Technical Quiz"> <span>Technical Quiz</span></label>
                 </div>
                 <div class="optgroup" id="non-technical-events">
-                    <span class="group-label">Non-technical events</span>
-                    <label><input type="checkbox" name="events" value="Ipl Auction"> <span>Ipl Auction</span></label>
-                    <label><input type="checkbox" name="events" value="PUBG/Freefire"> <span>PUBG/Freefire</span></label>
-                    <label><input type="checkbox" name="events" value="PES"> <span>PES</span></label>
+                    <span class="group-label">Non-technical events:</span>
+                    <label><input type="checkbox" id="special-event-checkbox" name="events" value="Ipl Auction"> <span>Ipl Auction</span></label>
+                    <label><input type="checkbox" name="events" value="PUBG/Freefire/PES"> <span>PUBG/Freefire/PES</span></label>
                     <label><input type="checkbox" name="events" value="Chess"> <span>Chess</span></label>
                     <label><input type="checkbox" name="events" value="Photography"> <span>Photography</span></label>
                     <label><input type="checkbox" name="events" value="Reel Making"> <span>Reel Making</span></label>
                 </div>
             </div>
 
-            <p id="warning" class="warning"></p>
+            <div class="warning" id="warning"></div>
+
             <div class="form-group">
-                <input style="color:white" type="submit" value="Pay Now" class="button">
+                <input type="submit" value="Pay Now" class="button">
             </div>
             <div class="form-group">
-                <input type="button" style="color:white" value="Go Home" onclick="window.location.href='/'" class="button">
+                <input type="button" value="Go Home" onclick="window.location.href='/'" class="button">
             </div>
         </form>
     </div>
     <script>
-        // Function to handle checkbox selection
-        const checkboxes = document.querySelectorAll('.optgroup input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const selectedCount = document.querySelectorAll('.optgroup input[type="checkbox"]:checked').length;
-                if (selectedCount > 2) {
-                    document.getElementById('warning').textContent = "You can select up to two events only.";
-                    this.checked = false;
-                } else if (selectedCount === 0) {
-                    document.getElementById('warning').textContent = "You should select at least one event.";
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.optgroup input[type="checkbox"]');
+            const warning = document.getElementById('warning');
+            const teamSizeDropdown = document.getElementById('team-size');
+            const teamMembersDiv = document.getElementById('team-members');
+            const teamMemberForm = document.getElementById('team-member-form');
+            const specialEvents = ['Ipl Auction', 'PUBG/Freefire/PES', 'Chess'];
+    
+            function updateCheckboxes() {
+                const selectedTechnical = document.querySelectorAll('#technical-events input[type="checkbox"]:checked').length;
+                const selectedNonTechnical = document.querySelectorAll('#non-technical-events input[type="checkbox"]:checked').length;
+                const totalSelected = selectedTechnical + selectedNonTechnical;
+    
+                // Count how many special events are selected
+                const specialEventsSelected = specialEvents.filter(event => document.querySelector(`input[value="${event}"]:checked`)).length;
+    
+                // Disable checkboxes based on selection limits
+                checkboxes.forEach(checkbox => {
+                    const value = checkbox.value;
+                    const isTechnical = checkbox.closest('#technical-events') !== null;
+                    const isNonTechnical = checkbox.closest('#non-technical-events') !== null;
+    
+                    if (totalSelected >= 4 && !checkbox.checked) {
+                        checkbox.disabled = true;
+                    } else if (isTechnical && selectedTechnical >= 2 && !checkbox.checked) {
+                        checkbox.disabled = true;
+                    } else if (isNonTechnical && selectedNonTechnical >= 2 && !checkbox.checked) {
+                        checkbox.disabled = true;
+                    } else if (specialEvents.includes(value) && specialEventsSelected > 1 && !checkbox.checked) {
+                        checkbox.disabled = true;
+                    } else {
+                        checkbox.disabled = false;
+                    }
+                });
+    
+                // Show warning messages based on validation
+                if (totalSelected > 4) {
+                    warning.textContent = "You can select up to four events in total.";
+                    warning.style.display = 'block';
+                } else if (selectedTechnical > 2) {
+                    warning.textContent = "You can select up to two technical events only.";
+                    warning.style.display = 'block';
+                } else if (selectedNonTechnical > 2) {
+                    warning.textContent = "You can select up to two non-technical events only.";
+                    warning.style.display = 'block';
+                } else if (specialEventsSelected > 1) {
+                    warning.textContent = "You can select only one of IPL Auction, PUBG/Freefire/PES, or Chess.";
+                    warning.style.display = 'block';
                 } else {
-                    document.getElementById('warning').textContent = "";
+                    warning.textContent = "";
+                    warning.style.display = 'none'; // Hide warning if no issues
                 }
-            });
-        });
-
-        // Function to handle team size selection and update event visibility
-        const teamSizeDropdown = document.getElementById('team-size');
-        const technicalEvents = document.getElementById('technical-events');
-        const nonTechnicalEvents = document.getElementById('non-technical-events');
-        const teamMembersDiv = document.getElementById('team-members');
-        const teamMemberForm = document.getElementById('team-member-form');
-
-        const sizeMap = {
-            '1': ['Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz', 'Photography', 'Reel Making', 'Chess', 'PES'],
-            '2': ['Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz', 'Photography', 'Reel Making', 'Chess', 'PES', 'PUBG/Freefire'],
-            '3': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz', 'Ipl Auction', 'PUBG/Freefire', 'Photography', 'Reel Making', 'Chess', 'PES'],
-            '4': ['Paper Presentation', 'Best Prompting', 'Tech Pictionary', 'Cicada', 'Technical Quiz', 'Ipl Auction', 'PUBG/Freefire', 'Photography', 'Reel Making', 'Chess', 'PES']
-        };
-
-        function updateEventVisibility() {
-            const selectedSize = teamSizeDropdown.value;
-            const visibleEvents = sizeMap[selectedSize] || [];
-
-            const allLabels = [...technicalEvents.querySelectorAll('label'), ...nonTechnicalEvents.querySelectorAll('label')];
-            allLabels.forEach(label => {
-                const checkbox = label.querySelector('input');
-                const eventValue = checkbox.value;
-                if (visibleEvents.includes(eventValue)) {
-                    checkbox.disabled = false;
-                    label.classList.remove('hidden');
-                } else {
-                    checkbox.disabled = true;
-                    label.classList.add('hidden');
-                }
-            });
-
-            // Update team member fields based on team size
-            if (selectedSize > 1) {
-                teamMembersDiv.classList.remove('hidden');
-                teamMemberForm.innerHTML = ''; // Clear existing fields
-
-                // Add Team Name input field
-                const teamNameDiv = document.createElement('div');
-                teamNameDiv.classList.add('form-group');
-                teamNameDiv.innerHTML = `
-                    <label for="teamname">Team Name:</label>
-                    <input type="text" id="teamname" name="teamname" placeholder="Enter team name" class="team-member-input">
-                `;
-                teamMemberForm.appendChild(teamNameDiv);
-
-                // Add Team Member inputs
-                const memberLabelDiv = document.createElement('div');
-                memberLabelDiv.classList.add('form-group');
-                memberLabelDiv.innerHTML = `
-                    <label>Teammate Names:</label>
-                `;
-                teamMemberForm.appendChild(memberLabelDiv);
-
-                for (let i = 2; i <= selectedSize; i++) {
-                    const memberDiv = document.createElement('div');
-                    memberDiv.classList.add('form-group');
-                    memberDiv.innerHTML = `
-                        <input type="text" id="teammate${i-1}" name="teammate${i-1}" placeholder="Enter teammate ${i-1} name" class="team-member-input">
-                    `;
-                    teamMemberForm.appendChild(memberDiv);
-                }
-            } else {
-                teamMembersDiv.classList.add('hidden');
             }
-        }
-
-        teamSizeDropdown.addEventListener('change', updateEventVisibility);
-
-        // Initialize visibility based on default selected value
-        updateEventVisibility();
+    
+            function updateEventVisibility() {
+                const selectedSize = teamSizeDropdown.value;
+    
+                checkboxes.forEach(checkbox => {
+                    if (selectedSize === '1' && checkbox.value === 'Ipl Auction') {
+                        checkbox.disabled = true;
+                        checkbox.checked = false; // Uncheck if it's selected
+                    } else {
+                        checkbox.disabled = false;
+                    }
+                });
+    
+                if (selectedSize > 1) {
+                    teamMembersDiv.classList.remove('hidden');
+                    teamMemberForm.innerHTML = '';
+    
+                    const teamNameDiv = document.createElement('div');
+                    teamNameDiv.classList.add('form-group');
+                    teamNameDiv.innerHTML = `
+                        <label for="teamname">Team Name:</label>
+                        <input type="text" id="teamname" name="teamname" placeholder="Enter team name" class="team-member-input">
+                    `;
+                    teamMemberForm.appendChild(teamNameDiv);
+    
+                    const memberLabelDiv = document.createElement('div');
+                    memberLabelDiv.classList.add('form-group');
+                    memberLabelDiv.innerHTML = `
+                        <label>Teammate Names:</label>
+                    `;
+                    teamMemberForm.appendChild(memberLabelDiv);
+    
+                    for (let i = 2; i <= selectedSize; i++) {
+                        const memberDiv = document.createElement('div');
+                        memberDiv.classList.add('form-group');
+                        memberDiv.innerHTML = `
+                            <input type="text" id="teammate${i-1}" name="teammate${i-1}" placeholder="Enter teammate ${i-1} name" class="team-member-input">
+                        `;
+                        teamMemberForm.appendChild(memberDiv);
+                    }
+                } else {
+                    teamMembersDiv.classList.add('hidden');
+                }
+    
+                updateCheckboxes();
+            }
+    
+            teamSizeDropdown.addEventListener('change', updateEventVisibility);
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateCheckboxes);
+            });
+    
+            updateEventVisibility();
+            updateCheckboxes();
+        });
     </script>
+    
+    
 </body>
 </html>
