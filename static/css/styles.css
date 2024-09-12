@@ -21,12 +21,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: neu;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 html, body {
     height: 100%;
     width: 100%;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 #main {
@@ -119,6 +120,7 @@ nav h3 {
     width: 25vw;
     font-size: 1.8vw;
     line-height: 2vw;
+    margin-bottom: -40px;
 }
 
 #center h1 {
@@ -126,6 +128,9 @@ nav h3 {
     text-align: right;
     line-height: 8vw;
     font-size: 150px;
+    margin-top: 200px;
+    line-height: 10vw;
+    margin-right:-14px ;
 }
 
 #page1 video {
@@ -522,7 +527,9 @@ nav h3 {
         margin: -12;
         font-size: 12vw;
         text-align: right;
-        line-height: 14vw;
+        margin-top: 200px;
+        line-height: 10vw;
+        margin-right:-14px 
     }
 
     #page1 video {
