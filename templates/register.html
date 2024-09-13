@@ -310,20 +310,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateEventVisibility() {
         const selectedSize = teamSizeDropdown.value;
 
-        // Hide and disable 'Ipl Auction' if team size is '1'
-        checkboxes.forEach(checkbox => {
-            if (checkbox.value === 'Ipl Auction') {
-                if (selectedSize === '1') {
-                    checkbox.disabled = true;
-                    checkbox.checked = false; // Ensure it's unchecked
-                    checkbox.closest('label').style.display = 'none'; // Hide the label
-                } else {
-                    checkbox.disabled = false;
-                    checkbox.closest('label').style.display = 'block'; // Show the label
-                }
-            }
-        });
-
         if (selectedSize > 1) {
             // Show team member inputs
             teamMembersDiv.classList.remove('hidden');
@@ -358,6 +344,20 @@ document.addEventListener('DOMContentLoaded', function() {
             // Hide team member inputs
             teamMembersDiv.classList.add('hidden');
         }
+
+                // Hide and disable 'Ipl Auction' if team size is '1'
+                checkboxes.forEach(checkbox => {
+            if (checkbox.value === 'Ipl Auction' || checkbox.value === 'Paper Presentation') {
+                if (selectedSize === '1') {
+                    checkbox.disabled = true;
+                    checkbox.checked = false; // Ensure it's unchecked
+                    checkbox.closest('label').style.display = 'none'; // Hide the label
+                } else {
+                    checkbox.disabled = false;
+                    checkbox.closest('label').style.display = 'block'; // Show the label
+                }
+            }
+        });
 
         updateCheckboxes();
     }
