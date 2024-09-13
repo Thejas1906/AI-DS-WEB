@@ -296,10 +296,10 @@ document.addEventListener('DOMContentLoaded', function() {
             warning.textContent = "You can select up to two non-technical events only.";
             warning.style.display = 'block';
         } else if ((specialEventsSelected > 1) && (teamSizeDropdown.value === '1')) {
-            warning.textContent = "You can select only one of IPL Auction, PUBG/Freefire/PES, or Chess.";
+            warning.textContent = "You can select only one of PUBG/Freefire/PES, or Chess.";
             warning.style.display = 'block';
         } else if ((specialEventsSelected > 1) && (teamSizeDropdown.value != '1')) {
-            warning.textContent = "You can select only one of IPL Auction, PUBG/Freefire/PES, or Chess.";
+            warning.textContent = "You can select only one of IPL Auction or PUBG/Freefire/PES or Chess.";
             warning.style.display = 'block';
         } else {
             warning.textContent = "";
